@@ -409,9 +409,9 @@ const useBroadcasting = () => {
     // scalable-broadcast.js will handle stuff itself.
     connection.current.autoCloseEntireSession = true;
 
-    connection.current.socketURL =
-      "https://rtcmulticonnection.herokuapp.com:443/";
-    // connection.current.socketURL = "https://muazkhan.com:9001/";
+    // connection.current.socketURL =
+    //   "https://rtcmulticonnection.herokuapp.com:443/";
+    connection.current.socketURL = "https://muazkhan.com:9001/";
 
     connection.current.socketMessageEvent = "scalable-media-broadcast-demo";
   }
