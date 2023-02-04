@@ -375,7 +375,7 @@ import RTCMultiConnection from "rtcmulticonnection";
 //   return [joinRoom];
 // };
 
-const useBroadcasting = (setNumParticipants, setConnectState, setUserMute) => {
+const useBroadcasting = () => {
   // const videoRef = useRef();
   // const btnJoin = useRef();
   // const btnMute = useRef();
