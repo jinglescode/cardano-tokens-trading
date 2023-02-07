@@ -2,6 +2,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import { CardanoWallet, useWallet } from "@meshsdk/react";
 import { useEffect, useState } from "react";
+import Login from "@/components/login";
 
 const RTC = dynamic(() => import("@/components/rtc"), {
   ssr: false,
@@ -30,7 +31,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {!connected && <CardanoWallet />}
+        {!connected && <Login />}
         {connected && <RTC />}
       </main>
     </>
