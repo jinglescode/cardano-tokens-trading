@@ -1,13 +1,26 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
-// import RTC from "@/components/rtc";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
+import { CardanoWallet, useWallet } from "@meshsdk/react";
+import { useEffect, useState } from "react";
 
-const RTC = dynamic(() => import('@/components/rtc'), {
+const RTC = dynamic(() => import("@/components/rtc"), {
   ssr: false,
-})
+});
 
 export default function Home() {
+  const { connected } = useWallet();
+
+  // useEffect(() => {
+  //   async function load() {
+  //     const usedAddresses = await wallet.getUsedAddresses();
+  //     console.log("usedAddresses[0]", usedAddresses[0]);
+  //     setUserId(usedAddresses[0]);
+  //   }
+  //   if (connected) {
+  //     load();
+  //   }
+  // }, [connected]);
+
   return (
     <>
       <Head>
@@ -16,8 +29,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <RTC userId="jingles" roomId="meshtestroom1" isBroadcaster={true} />
+      <main>
+        {!connected && <CardanoWallet />}
+        {connected && <RTC />}
       </main>
     </>
   );
