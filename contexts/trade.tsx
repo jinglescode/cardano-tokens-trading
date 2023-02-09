@@ -12,6 +12,9 @@ const TradeContext = createContext({
   userAddressOrHandler: "",
   connectionState: "",
   setConnectionState: (state: any) => {},
+  tradeState: {},
+  setTradeState: (state: any) => {},
+
   // wallet: {} as AppWallet,
   // setWallet: (wallet: AppWallet) => {},
   // walletNetwork: 0,
@@ -22,6 +25,14 @@ const TradeContext = createContext({
 export const TradeProvider = ({ children }) => {
   const [userAddressOrHandler, setUserAddressOrHandler] = useState("");
   const [connectionState, setConnectionState] = useState(ConnectionStates.init);
+  const [tradeState, setTradeState] = useState({
+    usersTrades: {},
+    usersState: {},
+    usersSelectedUtxos: {},
+    usersChangeAddress: {},
+    numParticipants: 0,
+    tradeAddresses: {},
+  });
 
   const { connected, wallet } = useWallet();
 
@@ -48,6 +59,8 @@ export const TradeProvider = ({ children }) => {
       userAddressOrHandler,
       connectionState,
       setConnectionState,
+      tradeState,
+      setTradeState,
       // wallet,
       // setWallet,
       // walletNetwork,
@@ -55,7 +68,7 @@ export const TradeProvider = ({ children }) => {
       // walletConnected,
     }),
     // [wallet, walletNetwork, walletConnected]
-    [userAddressOrHandler, connectionState]
+    [userAddressOrHandler, connectionState, tradeState]
   );
 
   return (

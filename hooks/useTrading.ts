@@ -8,19 +8,24 @@ import type { Unit, Quantity } from "@meshsdk/core";
 import { useWallet } from "@meshsdk/react";
 
 export const useTrading = () => {
-  const { userAddressOrHandler, connectionState, setConnectionState } = useTrade();
+  const {
+    userAddressOrHandler,
+    connectionState,
+    setConnectionState,
+    tradeState,
+    setTradeState,
+  } = useTrade();
   const { connected, wallet } = useWallet();
 
   // const [connectionState, setConnectionState] = useState(ConnectionStates.init);
-  const [tradeState, setTradeState] = useState({
-    // state: TradeStates.init,
-    usersTrades: {},
-    usersState: {},
-    usersSelectedUtxos: {},
-    usersChangeAddress: {},
-    numParticipants: 0,
-    tradeAddresses: {},
-  });
+  // const [tradeState, setTradeState] = useState({
+  //   usersTrades: {},
+  //   usersState: {},
+  //   usersSelectedUtxos: {},
+  //   usersChangeAddress: {},
+  //   numParticipants: 0,
+  //   tradeAddresses: {},
+  // });
   // const [user, setUser] = useState({ userId: "", isHost: false });
 
   const user = useRef({ userId: "", isHost: false });
@@ -54,6 +59,7 @@ export const useTrading = () => {
       _user.isHost = true;
       // setUser(_user);
       user.current = _user;
+      console.log(9999, _user)
     }
     const isBroadcaster = true;
     joinRoom(userId, roomId, isBroadcaster);
@@ -107,13 +113,16 @@ export const useTrading = () => {
     quantity: number;
     fromUserId?: string;
   }) {
+    console.log("updateTradeAsset", asset, quantity, fromUserId);
     let _userId = user.current.userId;
     if (fromUserId) {
       _userId = fromUserId;
     }
 
     // if is host, update state and send message
+    console.log(789, user.current.isHost) // TODO why not host???
     if (user.current.isHost) {
+      console.log(123,)
       let _tradeState = { ...tradeState };
       if (!(_userId in _tradeState.usersTrades)) {
         _tradeState.usersTrades[_userId] = {};
@@ -132,6 +141,7 @@ export const useTrading = () => {
         _tradeState.usersState[userId] = TradeStates.offering;
       }
       broadcastTradeState(_tradeState);
+      console.log(456,)
     }
     // else if is not host, send message
     else {

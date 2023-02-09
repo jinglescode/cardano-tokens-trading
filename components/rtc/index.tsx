@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Login from "@/components/login";
 import Connecting from "../Connecting";
 import Trade from "@/components/Trade";
+import useTrade from "@/contexts/trade";
 
 export default function RTC() {
   const { connected, wallet } = useWallet();
@@ -15,8 +16,6 @@ export default function RTC() {
   const {
     btnMute,
     userMicActive,
-    connectionState,
-    tradeState,
     user,
     endSession,
     openTradeRoom,
@@ -24,6 +23,9 @@ export default function RTC() {
     updateTradeAsset,
     userAcceptTrade,
   } = useTrading();
+
+  const { connectionState, tradeState } = useTrade();
+  console.log("tradeState", tradeState)
 
   useEffect(() => {
     async function loadAssets() {
@@ -45,26 +47,32 @@ export default function RTC() {
     []
   );
 
-  console.log("connectionState", connectionState);
-
   return (
     <>
-      <section className="h-screen bg-[url('https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/background.jpg')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
+      <section className="h-screen bg-[url('https://meshjs.dev/logo-mesh/mesh.png')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
         <Navbar
           btnMute={btnMute}
           userMicActive={userMicActive}
           connectionState={connectionState}
         />
-        <Trade />
 
-        {/* {!connected && <Login />} */}
+        {/* WIP for editing style */}
+        {/* <Trade /> */}
 
-        {/* {connectionState == ConnectionStates.readyToConnect && <JoinRoom />}
+        {!connected && <Login />}
 
-        {connectionState == ConnectionStates.connecting && <Connecting />} */}
+        {connectionState == ConnectionStates.readyToConnect && <JoinRoom />}
 
-        {/* {(connectionState == ConnectionStates.connected ||
-          connectionState == ConnectionStates.broadcasting) && <Trade />} */}
+        {connectionState == ConnectionStates.connecting && <Connecting />}
+
+        {(connectionState == ConnectionStates.connected ||
+          connectionState == ConnectionStates.broadcasting) && (
+          <Trade
+            updateTradeAsset={updateTradeAsset}
+            tradeState={tradeState}
+            user={user}
+          />
+        )}
       </section>
     </>
   );
