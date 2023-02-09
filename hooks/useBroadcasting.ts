@@ -241,7 +241,7 @@ export const useBroadcasting = ({
           );
         });
 
-        // if (btnMute.current) {
+        if (btnMute.current) {
         btnMute.current.addEventListener("click", () => {
           console.log("btnMute clicked", userMicActive, userMicActive.current);
           if (userMicActive.current == false) {
@@ -260,7 +260,7 @@ export const useBroadcasting = ({
             // userMicActive = true;
           }
         });
-        // }
+        }
 
         setTimeout(function () {
           if (broadcaster) {

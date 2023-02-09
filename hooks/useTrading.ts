@@ -8,10 +8,10 @@ import type { Unit, Quantity } from "@meshsdk/core";
 import { useWallet } from "@meshsdk/react";
 
 export const useTrading = () => {
-  const { userAddressOrHandler } = useTrade();
+  const { userAddressOrHandler, connectionState, setConnectionState } = useTrade();
   const { connected, wallet } = useWallet();
 
-  const [connectionState, setConnectionState] = useState(ConnectionStates.init);
+  // const [connectionState, setConnectionState] = useState(ConnectionStates.init);
   const [tradeState, setTradeState] = useState({
     // state: TradeStates.init,
     usersTrades: {},
@@ -41,6 +41,7 @@ export const useTrading = () => {
   }, [connected, userAddressOrHandler]);
 
   function openTradeRoom() {
+    setConnectionState(ConnectionStates.connecting);
     let roomId = userAddressOrHandler;
     let userId = userAddressOrHandler;
     if (userId.includes("addr_")) {
@@ -59,6 +60,7 @@ export const useTrading = () => {
   }
 
   function joinTradeRoom({ roomId }) {
+    setConnectionState(ConnectionStates.connecting);
     const isBroadcaster = false;
     joinRoom(userAddressOrHandler, roomId, isBroadcaster);
     // let _user = { ...user };

@@ -3,32 +3,32 @@ import { CardanoWallet } from "@meshsdk/react";
 
 export default function Login() {
   return (
-    <section className="bg-[url('https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/background.jpg')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen pt:mt-0">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-white"
-        >
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://meshjs.dev/logo-mesh/white/logo-mesh-white-256x256.png"
-            alt="logo"
-          />
-          Trade
-        </a>
-        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800">
-          <div className="p-6 space-y-4 md:space-y-6 lg:space-y-8 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
-              Connect Wallet to Begin
-            </h1>
+    // <section className="bg-[url('https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/background.jpg')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen pt:mt-0">
+      <a
+        href="#"
+        className="flex items-center mb-6 text-2xl font-semibold text-white"
+      >
+        <img
+          className="w-8 h-8 mr-2"
+          src="https://meshjs.dev/logo-mesh/white/logo-mesh-white-256x256.png"
+          alt="logo"
+        />
+        Trade
+      </a>
+      <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800">
+        <div className="p-6 space-y-4 md:space-y-6 lg:space-y-8 sm:p-8">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
+            Connect Wallet to Begin
+          </h1>
 
-            <div className="flex flex-col justify-center items-center mx-auto">
-              <CardanoWallet />
-            </div>
+          <div className="flex flex-col justify-center items-center mx-auto">
+            <CardanoWallet />
           </div>
         </div>
       </div>
-    </section>
+    </div>
+    // </section>
   );
 
   return (

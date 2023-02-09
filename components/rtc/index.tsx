@@ -2,6 +2,11 @@ import { useTrading } from "@/hooks/useTrading";
 import { useEffect, useState } from "react";
 import { ConnectionStates } from "@/types/connectionStates";
 import { useWallet } from "@meshsdk/react";
+import JoinRoom from "../JoinRoom";
+import Navbar from "@/components/Navbar";
+import Login from "@/components/login";
+import Connecting from "../Connecting";
+import Trade from "@/components/Trade";
 
 export default function RTC() {
   const { connected, wallet } = useWallet();
@@ -40,6 +45,30 @@ export default function RTC() {
     []
   );
 
+  console.log("connectionState", connectionState);
+
+  return (
+    <>
+      <section className="h-screen bg-[url('https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/background.jpg')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
+        <Navbar
+          btnMute={btnMute}
+          userMicActive={userMicActive}
+          connectionState={connectionState}
+        />
+        <Trade />
+
+        {/* {!connected && <Login />} */}
+
+        {/* {connectionState == ConnectionStates.readyToConnect && <JoinRoom />}
+
+        {connectionState == ConnectionStates.connecting && <Connecting />} */}
+
+        {/* {(connectionState == ConnectionStates.connected ||
+          connectionState == ConnectionStates.broadcasting) && <Trade />} */}
+      </section>
+    </>
+  );
+
   return (
     <>
       <p>tradeState</p>
@@ -62,7 +91,8 @@ export default function RTC() {
         <span>{userMicActive == false ? "Mic Off" : "Mic On"}</span>
       </button>
 
-      <br/><br/>
+      <br />
+      <br />
 
       {connectionState == ConnectionStates.connecting && <p>connecting...</p>}
 

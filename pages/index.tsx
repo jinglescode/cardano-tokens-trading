@@ -3,13 +3,14 @@ import dynamic from "next/dynamic";
 import { CardanoWallet, useWallet } from "@meshsdk/react";
 import { useEffect, useState } from "react";
 import Login from "@/components/login";
+// import Navbar from "@/components/Navbar";
 
 const RTC = dynamic(() => import("@/components/rtc"), {
   ssr: false,
 });
 
 export default function Home() {
-  const { connected } = useWallet();
+  // const { connected } = useWallet();
 
   // useEffect(() => {
   //   async function load() {
@@ -31,8 +32,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {!connected && <Login />}
-        {connected && <RTC />}
+        {/* {!connected && <Login />}
+        {connected && <RTC />} */}
+        <RTC />
       </main>
     </>
   );

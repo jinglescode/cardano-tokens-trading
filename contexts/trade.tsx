@@ -6,9 +6,12 @@ import React, {
   useMemo,
   useEffect,
 } from "react";
+import { ConnectionStates } from "@/types/connectionStates";
 
 const TradeContext = createContext({
   userAddressOrHandler: "",
+  connectionState: "",
+  setConnectionState: (state: any) => {},
   // wallet: {} as AppWallet,
   // setWallet: (wallet: AppWallet) => {},
   // walletNetwork: 0,
@@ -18,6 +21,7 @@ const TradeContext = createContext({
 
 export const TradeProvider = ({ children }) => {
   const [userAddressOrHandler, setUserAddressOrHandler] = useState("");
+  const [connectionState, setConnectionState] = useState(ConnectionStates.init);
 
   const { connected, wallet } = useWallet();
 
@@ -42,6 +46,8 @@ export const TradeProvider = ({ children }) => {
   const memoedValue = useMemo(
     () => ({
       userAddressOrHandler,
+      connectionState,
+      setConnectionState,
       // wallet,
       // setWallet,
       // walletNetwork,
@@ -49,7 +55,7 @@ export const TradeProvider = ({ children }) => {
       // walletConnected,
     }),
     // [wallet, walletNetwork, walletConnected]
-    [userAddressOrHandler]
+    [userAddressOrHandler, connectionState]
   );
 
   return (
