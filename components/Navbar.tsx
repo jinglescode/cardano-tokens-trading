@@ -3,7 +3,7 @@ import { ConnectionStates } from "@/types/connectionStates";
 
 export default function Navbar({ btnMute, userMicActive, connectionState }) {
   return (
-    <nav className="border-gray-200 px-4 lg:px-6 py-2.5 fixed z-30 w-full border-b dark:border-gray-700 bg-white/50 backdrop-blur dark:bg-gray-800/50">
+    <nav className="border-gray-200 px-4 lg:px-6 py-2.5 fixed z-30 w-full border-b dark:border-gray-700 bg-white/80 backdrop-blur dark:bg-gray-800/80">
       <div className="flex flex-wrap items-center justify-between mx-auto">
         <div className="flex items-center">
           <img
@@ -44,13 +44,12 @@ export default function Navbar({ btnMute, userMicActive, connectionState }) {
             //       : "hidden",
             // }}
             >
-              <button
+              {/* <button
                 className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm bg-white p-2"
                 ref={btnMute}
               >
-                {/* <span>{userMicActive == false ? "Mic Off" : "Mic On"}</span> */}
                 <SpeakerWaveIcon className="w-4 h-4" />
-              </button>
+              </button> */}
             </div>
           </ul>
         </div>

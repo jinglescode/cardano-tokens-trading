@@ -7,8 +7,8 @@ export default function AssetCard({ asset, updateTradeAsset }) {
           src="https://meshjs.dev/logo-mesh/mesh.png"
           alt=""
         />
-        <div className="p-2">
-          <p className="text-md font-bold tracking-tight text-gray-900 dark:text-white">
+        <div className="p-2 ">
+          <p className="text-md font-bold tracking-tight text-gray-900 dark:text-white h-12 overflow-hidden">
             {asset.assetName}
           </p>
         </div>

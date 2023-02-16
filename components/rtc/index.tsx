@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import Login from "@/components/login";
 import Connecting from "../Connecting";
 import Trade from "@/components/Trade";
-import useTrade from "@/contexts/trade";
 
 export default function RTC() {
   const { connected, wallet } = useWallet();
@@ -16,16 +15,17 @@ export default function RTC() {
   const {
     btnMute,
     userMicActive,
+    connectionState,
+    tradeState,
     user,
+    activites,
     endSession,
     openTradeRoom,
     joinTradeRoom,
     updateTradeAsset,
     userAcceptTrade,
+    sendChatMessage,
   } = useTrading();
-
-  const { connectionState, tradeState } = useTrade();
-  console.log("tradeState", tradeState)
 
   useEffect(() => {
     async function loadAssets() {
@@ -49,7 +49,7 @@ export default function RTC() {
 
   return (
     <>
-      <section className="h-screen bg-[url('https://meshjs.dev/logo-mesh/mesh.png')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
+      <section className="h-screen bg-[url('/grunge-g6dd1705d1_1920.jpg')] bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply bg-opacity-60">
         <Navbar
           btnMute={btnMute}
           userMicActive={userMicActive}
@@ -61,7 +61,12 @@ export default function RTC() {
 
         {!connected && <Login />}
 
-        {connectionState == ConnectionStates.readyToConnect && <JoinRoom />}
+        {connectionState == ConnectionStates.readyToConnect && (
+          <JoinRoom
+            openTradeRoom={openTradeRoom}
+            joinTradeRoom={joinTradeRoom}
+          />
+        )}
 
         {connectionState == ConnectionStates.connecting && <Connecting />}
 
@@ -71,6 +76,8 @@ export default function RTC() {
             updateTradeAsset={updateTradeAsset}
             tradeState={tradeState}
             user={user}
+            activites={activites}
+            sendChatMessage={sendChatMessage}
           />
         )}
       </section>

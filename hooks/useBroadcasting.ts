@@ -242,6 +242,7 @@ export const useBroadcasting = ({
         });
 
         if (btnMute.current) {
+          //@ts-ignore
         btnMute.current.addEventListener("click", () => {
           console.log("btnMute clicked", userMicActive, userMicActive.current);
           if (userMicActive.current == false) {

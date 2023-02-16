@@ -10,23 +10,22 @@ import { useWallet } from "@meshsdk/react";
 export const useTrading = () => {
   const {
     userAddressOrHandler,
-    connectionState,
-    setConnectionState,
-    tradeState,
-    setTradeState,
+    // connectionState,
+    // setConnectionState,
+    // tradeState,
+    // setTradeState,
   } = useTrade();
   const { connected, wallet } = useWallet();
 
-  // const [connectionState, setConnectionState] = useState(ConnectionStates.init);
-  // const [tradeState, setTradeState] = useState({
-  //   usersTrades: {},
-  //   usersState: {},
-  //   usersSelectedUtxos: {},
-  //   usersChangeAddress: {},
-  //   numParticipants: 0,
-  //   tradeAddresses: {},
-  // });
-  // const [user, setUser] = useState({ userId: "", isHost: false });
+  const [connectionState, setConnectionState] = useState(ConnectionStates.init);
+  const [tradeState, setTradeState] = useState({
+    usersTrades: {},
+    usersState: {},
+    usersSelectedUtxos: {},
+    usersChangeAddress: {},
+    numParticipants: 0,
+    tradeAddresses: {},
+  });
 
   const user = useRef({ userId: "", isHost: false });
   const [userMicActive, setUserMicActive] = useState(false);
@@ -38,6 +37,8 @@ export const useTrading = () => {
     userJoinOrLeft,
     setHostNumParticipants,
   });
+
+  const [activites, setActivites] = useState([]);
 
   useEffect(() => {
     if (connected && userAddressOrHandler != "") {
@@ -59,7 +60,7 @@ export const useTrading = () => {
       _user.isHost = true;
       // setUser(_user);
       user.current = _user;
-      console.log(9999, _user)
+      console.log(9999, _user);
     }
     const isBroadcaster = true;
     joinRoom(userId, roomId, isBroadcaster);
@@ -102,6 +103,15 @@ export const useTrading = () => {
         });
       }
     }
+
+    if (event.data.type == "sendChatMessage") {
+      console.log(
+        "receiveMessage",
+        event.extra.userId,
+        event.data.payload.message
+      );
+      receivedChatMessage(event.extra.userId, event.data.payload.message);
+    }
   }
 
   function updateTradeAsset({
@@ -113,16 +123,20 @@ export const useTrading = () => {
     quantity: number;
     fromUserId?: string;
   }) {
-    console.log("updateTradeAsset", asset, quantity, fromUserId);
+    console.log(
+      "updateTradeAsset",
+      asset,
+      quantity,
+      fromUserId,
+      user.current.isHost
+    );
     let _userId = user.current.userId;
     if (fromUserId) {
       _userId = fromUserId;
     }
 
     // if is host, update state and send message
-    console.log(789, user.current.isHost) // TODO why not host???
     if (user.current.isHost) {
-      console.log(123,)
       let _tradeState = { ...tradeState };
       if (!(_userId in _tradeState.usersTrades)) {
         _tradeState.usersTrades[_userId] = {};
@@ -141,10 +155,10 @@ export const useTrading = () => {
         _tradeState.usersState[userId] = TradeStates.offering;
       }
       broadcastTradeState(_tradeState);
-      console.log(456,)
     }
     // else if is not host, send message
     else {
+      console.log(999, { asset, quantity });
       sendMessage({
         type: "updateTradeAsset",
         payload: { asset, quantity },
@@ -245,16 +259,37 @@ export const useTrading = () => {
     }
   }
 
+  function sendChatMessage(message) {
+    console.log("sendChatMessage", message);
+    receivedChatMessage(user.current.userId, message);
+    sendMessage({
+      type: "sendChatMessage",
+      payload: { message },
+    });
+  }
+
+  function receivedChatMessage(who, message) {
+    let _chatMessages = [...activites];
+    _chatMessages.push({
+      type: "chat",
+      from: who,
+      message: message,
+    });
+    setActivites(_chatMessages);
+  }
+
   return {
     btnMute,
     userMicActive,
     connectionState,
     tradeState,
     user,
+    activites,
     endSession,
     openTradeRoom,
     joinTradeRoom,
     updateTradeAsset,
     userAcceptTrade,
+    sendChatMessage,
   };
 };
